@@ -1,0 +1,15 @@
+$primary-font:'Open Sans', sans-serif;
+$secondary-font:'Dosis', sans-serif;
+$header-font:'Pacifico', cursive;
+$font:50px;
+html,
+body
+{
+	font-family:$primary-font;
+}
+ .navbar-default  .navbar-header .navbar-brand
+ {
+ 	font-family:$header-font;
+ 	font-size:25px;
+
+ }
