@@ -10,10 +10,17 @@
       <a class="navbar-brand" href="#">Instapost</a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
-     
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        
+  <% if user_signed_in? %>
+    <li><%= link_to 'Edit Settings', edit_user_registration_path %></li>
+    <li><%= link_to 'Log Out', destroy_user_session_path, method: :delete %></li>
+  <% else %>
+    <li><%= link_to 'Sign Up', new_user_registration_path %></li>
+    <li><%= link_to 'Log In', new_user_session_path %></li>
+  <% end %>
+
+
       </ul>
     </div>
   </div>
