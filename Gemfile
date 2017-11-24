@@ -4,6 +4,8 @@ git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
   "https://github.com/#{repo_name}.git"
 end
+#gemfile for simpleform
+gem 'simple_form'
 #carrirewave for installing photos
 gem 'carrierwave', '~> 1.0'
 #for user authentication

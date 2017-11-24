@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>NewPost</title>
+</head>
+<body>
+	<div class="container">
+	<%= simple_form_for @posts do |f| %>
+		<%= f.input :photo %>
+  		<%= f.input :description , input_html:{class:'desc_styling',rows:10,col:40}, placeholder:'Enter your description.......' %>
+		<%= f.submit 'Post' , class: 'btn btn-primary '  %>
+	<% end %>	
+	</div>
+</body>
+</html>

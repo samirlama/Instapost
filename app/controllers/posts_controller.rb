@@ -5,6 +5,9 @@ class PostsController < ApplicationController
 			redirect_to root_path
 		end	
 	end
+	def new
+		@posts = Post.new
+	end
 	private
 	def post_params
 		params.require(:post).permit(:photo,:description)
