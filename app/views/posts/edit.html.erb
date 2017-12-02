@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<div class="container">
+	<h1>Edit Post</h1>
+	<%= simple_form_for @posts, method: :patch do |f| %>
+		<%= f.input :photo %>
+		<%= f.input :description ,input_html:{class:'desc_styling',rows:10 ,col:40} %>
+		<%= f.submit 'Edit' , class: 'btn btn-primary '  %>
+	<% end %>
+</div>
+</body>
+</html>
+

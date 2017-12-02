@@ -2,10 +2,16 @@ $primary-font:'Open Sans', sans-serif;
 $secondary-font:'Dosis', sans-serif;
 $header-font:'Pacifico', cursive;
 $font:50px;
+*
+{
+	margin:0;
+	padding:0;
+}
 html,
 body
 {
 	font-family:$primary-font;
+
 }
  .navbar-default  .navbar-header .navbar-brand
  {
@@ -15,6 +21,9 @@ body
  }
  .desc_styling
  {
- 	width:50%;
-
+ 	width:600px;
  }
+.thumbnail
+{
+	width:520px;
+}
