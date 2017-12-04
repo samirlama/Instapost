@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
 	before_action :authenticate_user!, only:[:new,:create] 
+	before_action :is_owner? , only: [:edit , :update , :destroy]
 	def create
 			@posts = current_user.posts.create(post_params)
 			if @posts.valid?
@@ -26,10 +27,23 @@ class PostsController < ApplicationController
 			render :edit , :status , :unprocessable_entity
 		end		
 	end	
+	def destroy
+		@posts = Post.find(params[:id])
+		if @posts.destroy
+			redirect_to root_path
+		end	
+	end	
+	def show
+		@posts = Post.find(params[:id])
+	end	
 
 	private
+	 def is_owner?
+	 	redirect_to root_path if Post.find(params[:id]).user != current_user
+	 end	
 
 	def post_params
   		params.require(:post).permit(:user_id, :photo, :description)
 	end
+
 end
