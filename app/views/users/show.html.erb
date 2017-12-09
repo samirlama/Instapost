@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Profile</title>
+</head>
+<body style="background: #F8F8F8;">
+	<div class="container" style="background:#F8F8F8; margin-bottom: 20px;">
+		<div class="row" >
+			<div class="col-md-3">
+			</div>
+			<div class="col-md-6">
+				<div class="panel panel-default" style="background-color:#F8F8F8; margin-top:20px; border:none;">
+					<div class="panel-body text-center" > 
+						<%= image_tag @users.photo , :style=>"height:200px; width:200px; border-radius:50%; " %>
+						<div><%= @users.name %></div>
+						<%= @users.email %>
+
+
+
+					</div>	
+					
+								
+									
+
+				</div>	
+			</div>
+		</div>
+		<div class="row">
+						<div class="col-md-2">
+						</div>
+						<div class="col-md-8">
+							
+							<div class="row">
+								<% @users.posts.each do |post| %>
+								<div class="col-md-4">
+									<%= image_tag post.photo,:style=>"height:200px; width:250px; margin-top:10px; margin-bottom:10px;"%>
+								</div>
+								
+								<% end %>
+							</div>
+							
+						</div>
+					</div>
+	</div>		
+</body>
+</html>

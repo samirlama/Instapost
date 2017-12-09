@@ -34,8 +34,29 @@
 						</div>	
     				</div>
     				<div class="panel-footer">
-    					Add Comments
+    					<% @posts.comments.each do |comment| %>
+    						<div class="panel-footer" style="border:none">
+    							<%= image_tag comment.user.photo, :style=>"width:30px; height:30px; border-radius:50%;" %>&nbsp
+    							<span style="color:blue;">
+    								<%= comment.user.name%>		
+    								</span>
+    								<span style="float:right;">
+    									<%= link_to 'Delete' , post_comment_path(post_id: post.id,comment_id: comment.id) , method: :delete  %>
+    								</span> 
+    							<div class="container">
+    								<%= comment.text %>							
+    							</div>
+    						</div>
+    					<% end %>
     				</div>
+    				<div class="panel-footer">
+    					<% if user_signed_in? %>
+  							<%= simple_form_for Comment.new, url: post_comments_path(@posts), method: :post do |f| %>
+    								<%= f.input :text, label: 'Comment', placeholder: 'Add a comment...' %>
+   									 <%= f.submit 'Post', class: 'btn btn-primary btn-block' %>
+  									<% end %>
+							<% end %>
+    				</div>		
   				</div>
 			</div>
 		</div>
