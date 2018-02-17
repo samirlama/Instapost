@@ -4,15 +4,19 @@
 	<title>Instapost</title>
 </head>
 <body>
-	<div class="container ">
+	<div class="container instapost-body">
+       
 		<% @posts.each do |post| %>
+        <% if (post.user).followed_by?(current_user) || post.user == current_user %>
+        
 		<div class="row">
-			<div class="col-md-3"></div>
+			
 			<div class="col-md-6">
 				<div class="panel panel-default">
     				<div class="panel-heading">
     					<%= image_tag post.user.photo, :style=>"width:50px; height:50px;" %>&nbsp
     					<span style="color:blue;"><%= link_to post.user.name , user_path(post.user) %></span>
+                        <span style="position:relative; top:12px; left:-50px; font-size:10px;"><%= distance_of_time_in_words(DateTime.now , post.created_at) %>&nbspago</span>
     						<span style="float:right; margin:10px 5px 0 0;"><%= link_to 'View' , post_path(post.id) %></span>
     					<% if post.user == current_user %>
     					<span style="float: right; margin:10px 5px 0 0;"><%= link_to 'Edit' , edit_post_path(post.id) %>&nbsp&nbsp&nbsp<%= link_to 'Delete' , post_path(post.id) , method: :delete %></span>
@@ -23,12 +27,20 @@
 							<div class="col-md-6">
 								<div class="thumbnail" style="margin:0 auto; border:none; ">
 									<%= image_tag post.photo %>
-									<div class="caption">
+									<div class="caption" style="height:80px;">
 										<p style="border-bottom:1px solid #e5e5e5; padding-bottom:5px"><%= post.description %></p>
-										<section>12 likes</section>
-										<a href="#"><i class="fa fa-heart-o" style="font-size:28px; color:#b9b9b9;"></i></a>
+                                        <% if current_user.voted_up_on? post %>
+      <%= link_to '<i class="fa fa-heart" aria-hidden="true"></i>'.html_safe, post_downvotes_path(post.id), method: :post %> 
+    <% else %>
+      <%= link_to '<i class="fa fa-heart-o" aria-hidden="true"></i>'.html_safe, post_upvotes_path(post.id), method: :post %>
+    <% end %>
+
+    <%= pluralize post.get_likes.size, "like" %>
+  </span>
+<% else %>
+
 								&nbsp&nbsp&nbsp
-										<a href="#"><i class="fa fa-comment-o" style="font-size:30px; color:#b9b9b9;"></i></a>
+									
 									</div>
 								</div>
 							</div>
@@ -39,21 +51,21 @@
     						<div class="panel-footer" style="border:none">
     							<%= image_tag comment.user.photo, :style=>"width:30px; height:30px; border-radius:50%;" %>&nbsp
     							<span style="color:blue;">
-    								<%= comment.user.name%>		
+    								<%= link_to comment.user.name , user_path(comment.user)%>		
     								</span>
     								<span style="float:right;">
     									<%= link_to 'Delete' , post_comment_path(post_id: post.id , id: comment.id) , method: :delete  %>
     								</span> 
     							<div class="container">
-    								<%= comment.text %>							
+    								<span style="position: relative; left:20px;"><%= comment.text %></span>							
     							</div>
     						</div>
     					<% end %>
-    					
-    				</div>		
+                       
+    					</div>		
     				<div class="panel-footer">	
     					<% if user_signed_in? %>
-  							<%= simple_form_for Comment.new, url: post_comments_path(post), method: :post do |f| %>
+  							<%= simple_form_for Comment.new, url: post_comments_path(post) do |f| %>
     								<%= f.input :text, label: 'Comment', placeholder: 'Add a comment...' %>
    									 <%= f.submit 'Post', class: 'btn btn-primary btn-block' %>
   									<% end %>
@@ -61,8 +73,10 @@
     				</div>
   				</div>
 			</div>
+            
 		</div>
 		<% end %>
+        <% end %>
 	</div>	
 </body>
 </html>

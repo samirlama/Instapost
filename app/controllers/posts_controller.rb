@@ -4,13 +4,15 @@ class PostsController < ApplicationController
 	def create
 			@posts = current_user.posts.create(post_params)
 			if @posts.valid?
-				redirect_to root_path
+				redirect_to posts_path
 			else
 				render :new,status: :unprocessable_entity
 			end		
 	end	
 	def index
 		@posts = Post.all.order('created_at DESC')
+		
+
 	end	
 	def new 
 	@posts = Post.new
@@ -35,8 +37,9 @@ class PostsController < ApplicationController
 	end	
 	def show
 		@posts = Post.find(params[:id])
+		end
 	end	
-
+	
 	private
 	 def is_owner?
 	 	redirect_to root_path if Post.find(params[:id]).user != current_user
@@ -46,4 +49,4 @@ class PostsController < ApplicationController
   		params.require(:post).permit(:user_id, :photo, :description)
 	end
 
-end
+

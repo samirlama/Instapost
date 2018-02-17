@@ -38,10 +38,10 @@
     						<div class="panel-footer" style="border:none">
     							<%= image_tag comment.user.photo, :style=>"width:30px; height:30px; border-radius:50%;" %>&nbsp
     							<span style="color:blue;">
-    								<%= comment.user.name%>		
+    								<%=link_to comment.user.name, user_path(comment.user)%>		
     								</span>
     								<span style="float:right;">
-    									<%= link_to 'Delete' , post_comment_path(post_id: post.id,comment_id: comment.id) , method: :delete  %>
+    									<%= link_to 'Delete' , post_comment_path(post_id: post.id, id: comment.id) , method: :delete  %>
     								</span> 
     							<div class="container">
     								<%= comment.text %>							

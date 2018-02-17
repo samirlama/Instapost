@@ -1,7 +1,19 @@
-<!DOCTYPE html>
+	<!DOCTYPE html>
 <html>
 <head>
 	<title>Profile</title>
+	<style>
+	.Following
+	{
+		background:#3995f0;
+		padding:5px;
+	}
+	.Following-option
+	{
+		background:#fafafa;
+		padding:5px;
+	}
+</style>
 </head>
 <body style="background: #F8F8F8;">
 	<div class="container" style="background:#F8F8F8; margin-bottom: 20px;">
@@ -14,6 +26,20 @@
 						<%= image_tag @users.photo , :style=>"height:200px; width:200px; border-radius:50%; " %>
 						<div><%= @users.name %></div>
 						<%= @users.email %>
+						<% if @users != current_user %>
+						<% if current_user.following?(@users) %><br>
+						<%= link_to '<div style="background:#3995f0; padding:5px; width:50%; margin-left:130px;">Following</div>'.html_safe , user_follow_path(user_id: @users.id , id: @follow),method: :delete %>
+						
+						<% else %>
+						<%= link_to '<div style="background:#3995f0; padding:5px; width:50%; margin-left:130px;">Follow</div>'.html_safe , user_follows_path(@users.id),method: :post %>
+						<% end %>
+						<% end %>
+						
+						<div>Total no. of followers</div>
+						<%= @users.followers_count %>
+						<div>Total no. of following</div>
+						<%= @users.follow_count %>
+
 
 
 
@@ -29,7 +55,7 @@
 						<div class="col-md-2">
 						</div>
 						<div class="col-md-8">
-							
+							<% if current_user.following?(@users) || @users == current_user %>
 							<div class="row">
 								<% @users.posts.each do |post| %>
 								<div class="col-md-4">
@@ -38,6 +64,7 @@
 								
 								<% end %>
 							</div>
+							<% end %>
 							
 						</div>
 					</div>
